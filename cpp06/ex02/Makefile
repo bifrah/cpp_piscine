@@ -12,7 +12,8 @@ OBJ_PATH		= obj/
 SRC_PATH		= ./
 
 OBJ_NAME		= $(SRC_NAME:.cpp=.o)
-SRC_NAME		= main.cpp
+SRC_NAME		= main.cpp \
+					Base.cpp
 
 INC				= -I $(INC_PATH)
 OBJ				= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
