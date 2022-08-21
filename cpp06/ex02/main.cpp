@@ -16,14 +16,12 @@ Base*	generate(void)
 		generated = new A();
 		std::cout << "Instance A created." << std::endl;
 	}
-
-	if (nb == 1)
+	else if (nb == 1)
 	{
 		generated = new B();
 		std::cout << "Instance B created." << std::endl;
 	}
-
-	if (nb == 2)
+	else
 	{
 		generated = new C();
 		std::cout << "Instance C created." << std::endl;
