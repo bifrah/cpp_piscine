@@ -4,8 +4,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <exception>
-
 
 template <typename T>
 void	easyfind(T vect, int nb)
