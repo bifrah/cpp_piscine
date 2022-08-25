@@ -68,7 +68,15 @@ int	main(void)
 
 	std::cout << "\n----------Test with std::string : ----------" << std::endl;
 	Array <std::string>test4(42);
-	test4[2] = "HELLO";
-	test4[21] = "WORLD";
+	try
+	{
+		test4[2] = "HELLO";
+		test4[21] = "WORLD";
+		test4[42] = "ERROR";
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	print_array(test4, 42);
 }
