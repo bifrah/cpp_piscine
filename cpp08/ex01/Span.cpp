@@ -57,7 +57,26 @@ unsigned int	Span::shortestSpan(void) {
 		it++;
 	}
 	return (distance);
-	// on check si le couple precedent est encore plus petit... etc
-	// on stocke dans tmp a chaque fois pour compare la distance actuelle a tmp
-	// on retourne le plus petit nombre
+}
+
+unsigned int	Span::longestSpan(void) {
+	if (this->_vect.size() <= 1)
+		throw (SpanIsNotHere());
+
+	std::sort(this->_vect.begin(), this->_vect.end());
+
+	std::vector<int>::iterator	it = this->_vect.begin();
+	std::vector<int>::iterator	it_plus_one;
+	unsigned int	distance = *(this->_vect.begin()) - *(this->_vect.begin() + 1);
+	unsigned int	tmp;
+	
+	while (it != this->_vect.end() - 1)
+	{
+		it_plus_one = it + 1;
+		tmp = *it_plus_one - *it;
+		if (tmp > distance)
+			distance = tmp;
+		it++;
+	}
+	return (distance);
 }
