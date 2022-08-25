@@ -47,10 +47,8 @@ public:
 	}
 
 	/*--------------Exceptions--------------*/
-	class SegFault : public std::exception
-	{
-		virtual const char *what() const throw()
-		{
+	class SegFault : public std::exception {
+		virtual const char *what() const throw() {
 			return("\nBad index.\n");
 		}
 	};
