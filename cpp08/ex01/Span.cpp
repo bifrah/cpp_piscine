@@ -64,19 +64,18 @@ unsigned int	Span::longestSpan(void) {
 		throw (SpanIsNotHere());
 
 	std::sort(this->_vect.begin(), this->_vect.end());
+	unsigned int	distance = *(this->_vect.end() - 1) - *(this->_vect.begin());
+	return (distance);
+}
 
-	std::vector<int>::iterator	it = this->_vect.begin();
-	std::vector<int>::iterator	it_plus_one;
-	unsigned int	distance = *(this->_vect.begin()) - *(this->_vect.begin() + 1);
-	unsigned int	tmp;
-	
-	while (it != this->_vect.end() - 1)
+void    Span::print(void) {
+    std::vector<int>::iterator it = this->_vect.begin();
+	while (it != this->_vect.end())
 	{
-		it_plus_one = it + 1;
-		tmp = *it_plus_one - *it;
-		if (tmp > distance)
-			distance = tmp;
+        std::cout << *it << " ";
 		it++;
 	}
-	return (distance);
+    if (this->_vect.empty())
+        std::cout << "Empty vector ";
+    std::cout << std::endl;
 }

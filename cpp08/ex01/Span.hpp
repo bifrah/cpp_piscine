@@ -36,6 +36,8 @@ public:
 		void			addNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end);
 		unsigned int	shortestSpan(void);
 		unsigned int	longestSpan(void);
+	
+		void			print(void);
 
 private:
 
