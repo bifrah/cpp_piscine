@@ -1,45 +1,43 @@
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
-#include <map>
-#include <string>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
-#include <cstring>
-#include <limits>
+#include "include.hpp"
 
 // Fonction pour convertir une date en nombre de jours depuis le 1er janvier 1970
 time_t date_to_days(const std::string& date_str)
 {
 	std::tm date = {};
-	std::istringstream date_iss(date_str);
-	date_iss >> std::get_time(&date, "%Y-%m-%d");
-	if (date_iss.fail())
+	// std::istringstream date_iss(date_str);
+	// std::cout << date_str << std::endl;
+	int year, month, day;
+	if (std::sscanf(date_str.c_str(), "%d-%d-%d", &year, &month, &day) != 3)
 		throw std::invalid_argument("invalid date format");
+	date.tm_year = year - 1900;
+	date.tm_mon = month - 1;
+	date.tm_mday = day;
 	date.tm_hour = 12;
 	return std::mktime(&date) / (60 * 60 * 24);
 }
 
+
 int main(int argc, char** argv)
 {
 	// Vérification des arguments de la ligne de commande
-	if (argc != 2) {
+	if (argc != 2)
+	{
 		std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
 		return 1;
 	}
 
 	// Ouverture du fichier d'entrée
 	std::ifstream infile(argv[1]);
-	if (!infile) {
+	if (!infile)
+	{
 		std::cerr << "Error: could not open input file." << std::endl;
 		return 1;
 	}
 
 	// Ouverture du fichier des données Bitcoin
 	std::ifstream bitcoin_file("data.csv");
-	if (!bitcoin_file) {
+	if (!bitcoin_file)
+	{
 		std::cerr << "Error: could not open Bitcoin data file." << std::endl;
 		return 1;
 	}
@@ -47,15 +45,18 @@ int main(int argc, char** argv)
 	// Ajout des données Bitcoin dans une map
 	std::map<time_t, float> bitcoin_data;
 	std::string line;
-	while (std::getline(bitcoin_file, line)) {
+	while (std::getline(bitcoin_file, line))
+	{
 		std::string date_str = line.substr(0, line.find(','));
+		// std::cout << date_str << std::endl;
 		std::string value_str = line.substr(line.find(',') + 1);
+		// std::cout << value_str << std::endl;
 		float value;
 		std::istringstream(value_str) >> value;
-		if (value_str.empty() || std::isnan(value)) {
+		if (value_str.empty() || std::isnan(value))
 			continue;
-		}
 		time_t date = date_to_days(date_str);
+		std::cout << date << std::endl;
 		bitcoin_data[date] = value;
 	}
 
@@ -70,41 +71,39 @@ int main(int argc, char** argv)
 		float value;
 		std::istringstream(value_str) >> value;
 		if (value_str.empty() || std::isnan(value))
-		{
 			continue;
-		}
-		// Conversion de la date en un nombre de jours depuis 1970
-		// time_t date = date_to_days(date_str);
-	}
 
-	// Chercher la valeur la plus proche dans la map
-	for (std::map<time_t, float>::const_iterator it = bitcoin_data.begin(); it != bitcoin_data.end(); ++it)
-	{
-		const time_t& date = it->first;
-		// const float& value = it->second;
-		
-		int closest_date_diff = std::numeric_limits<int>::max();
-		float closest_value = 0;
-
-		for (std::map<time_t, float>::const_iterator it2 = bitcoin_data.begin(); it2 != bitcoin_data.end(); ++it2)
+		// Chercher la valeur la plus proche dans la map
+		for (std::map<time_t, float>::const_iterator it = bitcoin_data.begin(); it != bitcoin_data.end(); ++it)
 		{
-			const time_t& other_date = it2->first;
-			const float& other_value = it2->second;
+			const time_t& date = it->first;
+			float closest_value = it->second;
+			int closest_date_diff = std::numeric_limits<int>::max();
 
-			int date_diff_value = static_cast<int>(std::abs(std::difftime(date, other_date) / (60 * 60 * 24)));
-			if (date_diff_value < closest_date_diff)
+			for (std::map<time_t, float>::const_iterator it2 = bitcoin_data.begin(); it2 != bitcoin_data.end(); ++it2)
 			{
-				closest_date_diff = date_diff_value;
-				closest_value = other_value;
-			}
-		}
+				const time_t& other_date = it2->first;
+				const float& other_value = it2->second;
 
-		// Affichage des résultats
-		std::stringstream date_ss;
-		char date_str[11];
-		strftime(date_str, sizeof(date_str), "%d/%m/%Y", std::localtime(&date));
-		date_ss << date_str;
-		std::cout << date_ss.str() << ": " << closest_value << std::endl;
+				int date_diff_value = static_cast<int>(std::abs(std::difftime(date, other_date) / (60 * 60 * 24)));
+				if (date_diff_value < closest_date_diff)
+				{
+					closest_date_diff = date_diff_value;
+					closest_value = other_value;
+				}
+			}
+
+			// Recherche de la valeur la plus proche
+			std::map<time_t, float>::const_iterator closest_it = bitcoin_data.find(date);
+			if (closest_it == bitcoin_data.end()) {
+				std::cerr << "Error: could not find closest value for date " << date << std::endl;
+				continue;
+			}
+			closest_value = closest_it->second;
+
+			// Affichage des résultats
+			std::cout << date_str << " => " << value << " = " << closest_value * value << std::endl;
+		}
 	}
 	return 0;
 }
