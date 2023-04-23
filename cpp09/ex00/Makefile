@@ -23,22 +23,22 @@ SRC				= $(addprefix $(SRC_PATH), $(SRC_NAME))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(RED)[ex01] : $(DEF)Compilation..."
+	@echo "$(RED)[ex00] : $(DEF)Compilation..."
 	@$(CC) $(PARAMS) $(OBJ) -o $(NAME) $(INC)
-	@echo "$(RED)[ex01] : $(DEF)Compilation                 $(GRN)[OK]$(DEF)"
+	@echo "$(RED)[ex00] : $(DEF)Compilation                 $(GRN)[OK]$(DEF)"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	@echo "$(RED)[ex01] :$(DEF) Compiling $@"
+	@echo "$(RED)[ex00] :$(DEF) Compiling $@"
 	@$(CC) $(PARAMS) $(INC) -o $@ -c $<
 
 clean:
 	@rm -rf $(OBJ)
-	@echo "$(RED)[ex01] : $(DEF)Cleaning                    $(GRN)[OK]$(DEF)"
+	@echo "$(RED)[ex00] : $(DEF)Cleaning                    $(GRN)[OK]$(DEF)"
 
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(OBJ_PATH)
-	@echo "$(RED)[ex01] : $(DEF)Full Cleaning               $(GRN)[OK]$(DEF)"
+	@echo "$(RED)[ex00] : $(DEF)Full Cleaning               $(GRN)[OK]$(DEF)"
 
 re: fclean all
