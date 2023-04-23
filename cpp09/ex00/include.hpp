@@ -9,6 +9,7 @@
 #include <limits>
 #include <stdexcept>
 #include <cstring>
+#include <cstdlib>
 #include <ctime>
 
 #endif
