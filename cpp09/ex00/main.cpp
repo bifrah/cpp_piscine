@@ -65,7 +65,6 @@ bool is_valid_line_format(const std::string& line) {
 	return true;
 }
 
-
 int main(int argc, char** argv)
 {
 	// Vérification des arguments de la ligne de commande
