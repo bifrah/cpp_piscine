@@ -126,24 +126,36 @@ int main(int argc, char** argv)
 		std::getline(iss, value_str);
 		float value;
 		std::istringstream(value_str) >> value;
+		time_t date = date_to_days(date_str);
 
-		// Chercher la date la plus proche dans la map
-		time_t target_date = date_to_days(date_str);
-		time_t closest_date = 0;
-		float closest_distance = std::numeric_limits<float>::max();
-		for (std::map<time_t, float>::iterator it = bitcoin_data.begin(); it != bitcoin_data.end(); ++it)
+		// Recherche de la date dans la map
+		std::map<time_t, float>::iterator it = bitcoin_data.find(date);
+		if (it == bitcoin_data.end())
 		{
-			float distance = std::abs(difftime(it->first, target_date));
-			if (distance < closest_distance)
+			// La date n'existe pas dans la map, il faut utiliser la date la plus proche
+			std::map<time_t, float>::iterator lower = bitcoin_data.lower_bound(date);
+			if (lower == bitcoin_data.begin())
 			{
-				closest_distance = distance;
-				closest_date = it->first;
+				// Date inférieure à toutes les dates dans la map
+				std::cout << date_str << " => " << value << " = 0" << std::endl;
+			}
+			else if (lower == bitcoin_data.end())
+			{
+				// Date supérieure à toutes les dates dans la map
+				std::cout << date_str << " => " << value << " = " << bitcoin_data.rbegin()->second * value << std::endl;
+			}
+			else
+			{
+				// Date entre deux dates dans la map
+				float val_upper = (--lower)->second;
+				std::cout << date_str << " => " << value << " = " << val_upper * value << std::endl;
 			}
 		}
-		// Récupérer la valeur associée à la date la plus proche
-		float closest_value = bitcoin_data[closest_date];
-		// Affichage des résultats : valeur de la date la plus proche * valeur du fichier d'entree.
-		std::cout << date_str << " => " << value << " = " << closest_value * value << std::endl;
+		else
+		{
+			// La date existe dans la map
+			std::cout << date_str << " => " << value << " = " << it->second * value << std::endl;
+		}
 	}
 	return (0);
 }
