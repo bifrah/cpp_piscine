@@ -32,7 +32,8 @@ bool is_valid_date(const std::string& date_str)
 	return true;
 }
 
-bool is_valid_line_format(const std::string& line) {
+bool is_valid_line_format(const std::string& line)
+{
 	// Vérification du format de la ligne
 	if (line.empty() || (line.find('|') == std::string::npos)) {
 		std::cerr << "Error: line: invalid format" << std::endl;
@@ -46,16 +47,39 @@ bool is_valid_line_format(const std::string& line) {
 	std::getline(iss, value_str);
 
 	// Vérification de la validité de la date
-	if (!is_valid_date(date_str)) {
-		std::cerr << "Error: date: invalid format" << std::endl;
+	if (!is_valid_date(date_str))
+	{
+		std::cerr << "Error: date: invalid format or empty" << std::endl;
 		return false;
 	}
 
 	// Vérification de la validité de la valeur
+	// std::cout << "value_str : " << value_str << std::endl;
 	if (value_str.empty())
 	{
 		std::cerr << "Error: value: empty" << std::endl;
 		return (false);
+	}
+
+	std::string valid_chars = "0123456789,.";
+	size_t i = 1;
+	bool digit = false;
+	while (i < value_str.length())
+	{
+		if (!(valid_chars.find(value_str[i]) != std::string::npos))
+		{
+			// La chaîne contient un caractère invalide
+			std::cerr << "Error: value: invalid character" << std::endl;
+			return false;
+		}
+		else if (isdigit(value_str[i]))
+			digit = true;
+		i++;
+	}
+	if (!digit)
+	{
+		std::cerr << "Error: value: no digits found" << std::endl;
+		return false;
 	}
 	float value = std::atof(value_str.c_str());
 	if (value < 0 || value > 1000) {
