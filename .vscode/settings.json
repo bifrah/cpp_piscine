@@ -50,6 +50,9 @@
 		"compare": "cpp",
 		"concepts": "cpp",
 		"ranges": "cpp",
-		"list": "cpp"
+		"list": "cpp",
+		"map": "cpp",
+		"numbers": "cpp",
+		"cinttypes": "cpp"
 	}
 }
