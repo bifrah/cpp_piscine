@@ -65,38 +65,14 @@ bool is_valid_line_format(const std::string& line) {
 	return true;
 }
 
-int main(int argc, char** argv)
+// Fonction qui ajoute les données d'un fichier .csv dans une map
+void add_csv_data_to_map(std::map<time_t, float>& data_map, std::ifstream& csv_file)
 {
-	// Vérification des arguments de la ligne de commande
-	if (argc != 2)
-	{
-		std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
-		return 1;
-	}
-
-	// Ouverture du fichier d'entrée
-	std::ifstream infile(argv[1]);
-	if (!infile)
-	{
-		std::cerr << "Error: could not open input file." << std::endl;
-		return 1;
-	}
-
-	// Ouverture du fichier des données data.csv
-	std::ifstream bitcoin_file("data.csv");
-	if (!bitcoin_file)
-	{
-		std::cerr << "Error: could not open Bitcoin data file." << std::endl;
-		return 1;
-	}
-
-	// Ajout des données data.csv dans une map
-	std::map<time_t, float> bitcoin_data;
 	std::string line;
 	int line_count = 0;
-	while (std::getline(bitcoin_file, line))
+	while (std::getline(csv_file, line))
 	{
-		// Ignore the first line of .csv "date,exchange_rate"
+		// Ignore la première ligne du fichier .csv "date,exchange_rate"
 		if (line_count == 0)
 		{
 			line_count++;
@@ -109,10 +85,13 @@ int main(int argc, char** argv)
 		if (value_str.empty() || std::isnan(value))
 			continue;
 		time_t date = date_to_days(date_str);
-		bitcoin_data[date] = value;
+		data_map[date] = value;
 	}
+}
 
-	// Parcours du fichier d'entrée et affichage des résultats
+void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
+{
+	std::string line;
 	while (std::getline(infile, line))
 	{
 		// Vérification du format de la ligne
@@ -157,5 +136,36 @@ int main(int argc, char** argv)
 			std::cout << date_str << " => " << value << " = " << it->second * value << std::endl;
 		}
 	}
+}
+
+int main(int argc, char** argv)
+{
+	// Vérification des arguments de la ligne de commande
+	if (argc != 2)
+	{
+		std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
+		return 1;
+	}
+	// Ouverture du fichier d'entrée
+	std::ifstream infile(argv[1]);
+	if (!infile)
+	{
+		std::cerr << "Error: could not open input file." << std::endl;
+		return 1;
+	}
+	// Ouverture du fichier des données data.csv
+	std::ifstream bitcoin_file("data.csv");
+	if (!bitcoin_file)
+	{
+		std::cerr << "Error: could not open Bitcoin data file." << std::endl;
+		return 1;
+	}
+
+	// Ajout des données data.csv dans une map
+	std::map<time_t, float> bitcoin_data;
+	add_csv_data_to_map(bitcoin_data, bitcoin_file);
+	bitcoin_file.close();
+	// Parcours du fichier d'entrée et affichage des résultats
+	process_file(infile, bitcoin_data);
 	return (0);
 }
