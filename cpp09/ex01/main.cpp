@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 				else if (token == "/")
 					calc.div();
 				else 
-					calc.push(atoi(token.c_str()));
+					calc.push(atof(token.c_str()));
 			}
 		}
 	}
