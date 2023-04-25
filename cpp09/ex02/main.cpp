@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	for (int i = 1; i < argc; i++) {
 		for (size_t j = 0; j < strlen(argv[i]); j++) {
 			if (!isdigit(argv[i][j])) {
-				std::cerr << "Error: " << argv[i] << " is not a number or positive integer." << std::endl;
+				std::cerr << "Error: " << argv[i] << " is not a number or a positive integer." << std::endl;
 				return 1;
 			}
 		}
