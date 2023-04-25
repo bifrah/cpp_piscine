@@ -8,16 +8,19 @@ int main(int argc, char** argv) {
 		std::string token;
 		while (getline(ss, token, ' '))
 		{
-			if (token == "+")
-				calc.add();
-			else if (token == "-")
-				calc.sub();
-			else if (token == "*")
-				calc.mul();
-			else if (token == "/")
-				calc.div();
-			else 
-				calc.push(atoi(token.c_str()));
+			if (!token.empty())
+			{
+				if (token == "+")
+					calc.add();
+				else if (token == "-")
+					calc.sub();
+				else if (token == "*")
+					calc.mul();
+				else if (token == "/")
+					calc.div();
+				else 
+					calc.push(atoi(token.c_str()));
+			}
 		}
 	}
 	try {
