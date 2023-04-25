@@ -24,9 +24,8 @@ int main(int argc, char **argv)
 	{
 		std::istringstream iss(argv[i]);
 		int num;
-		while (iss >> num) {
+		while (iss >> num)
 			sequence.push_back(num);
-		}
 		i++;
 	}
 
