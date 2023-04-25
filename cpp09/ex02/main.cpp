@@ -1,10 +1,20 @@
 #include "PmergeMe.hpp"
 
-int main(int argc, char* argv[])
+int main(int argc, char **argv)
 {
 	if (argc < 2) {
 		std::cerr << "Usage: " << argv[0] << " sequence" << std::endl;
 		return 1;
+	}
+
+	// Vérifie si tous les arguments sont des nombres
+	for (int i = 1; i < argc; i++) {
+		for (size_t j = 0; j < strlen(argv[i]); j++) {
+			if (!isdigit(argv[i][j])) {
+				std::cerr << "Error: " << argv[i] << " is not a number." << std::endl;
+				return 1;
+			}
+		}
 	}
 
 	// Parse the input sequence
