@@ -18,28 +18,15 @@ std::vector<int> merge_vector(const std::vector<int>& v1, const std::vector<int>
 }
 
 void PmergeMe::mergeInsertSortVector(std::vector<int>& v, size_t start, size_t end) {
-	if (start < end) {
-		if (end - start <= 10) {
-			// Insertion sort for small sequences
-			for (size_t i = start; i <= end - 1; ++i) {
-				int key = v[i];
-				size_t j = i;
-				while (j > start && v[j - 1] > key) {
-					v[j] = v[j - 1];
-					--j;
-				}
-				v[j] = key;
-			}
-		} else {
-				size_t middle = (start + end) / 2;
-				mergeInsertSortVector(v, start, middle);
-				mergeInsertSortVector(v, middle + 1, end);
-				std::vector<int> merged = merge_vector(std::vector<int>(v.begin() + start, v.begin() + middle + 1),
-													   std::vector<int>(v.begin() + middle + 1, v.begin() + end + 1));
-				std::copy(merged.begin(), merged.end(), v.begin() + start);
-		}
-	}
+    if (end - start <= 1) {
+        return;
+    }
+    size_t middle = (start + end) / 2;
+    mergeInsertSortVector(v, start, middle);
+    mergeInsertSortVector(v, middle, end);
+    std::inplace_merge(v.begin() + start, v.begin() + middle, v.begin() + end);
 }
+
 
 std::list<int> merge_list(const std::list<int>& l1, const std::list<int>& l2) {
 	std::list<int> result;
