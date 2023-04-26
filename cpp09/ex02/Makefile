@@ -13,7 +13,8 @@ SRC_PATH		= ./
 
 OBJ_NAME		= $(SRC_NAME:.cpp=.o)
 SRC_NAME		= main.cpp \
-					PmergeMe.cpp
+					PmergeMe.cpp \
+					utils.cpp
 
 INC				= -I $(INC_PATH)
 OBJ				= $(addprefix $(OBJ_PATH), $(OBJ_NAME))

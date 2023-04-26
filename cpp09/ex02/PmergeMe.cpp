@@ -15,8 +15,8 @@ void PmergeMe::mergeISVector() {
 	// Start the timer
 	std::clock_t start = std::clock();
 
-	// Sort the sequence using the std::sort algorithm
-	std::sort(seqCopy.begin(), seqCopy.end());
+	// Sort the sequence using the merge-insert sort algorithm
+    mergeInsertSortVector(seqCopy, 0, seqCopy.size());
 
 	// End the timer and record the time taken
 	std::clock_t end = std::clock();
@@ -34,7 +34,8 @@ void PmergeMe::mergeISList() {
 	std::clock_t start = std::clock();
 
 	// Sort the sequence using the std::list::sort member function
-	seqCopy.sort();
+	mergeInsertSortList(seqCopy);
+
 
 	// End the timer and record the time taken
 	std::clock_t end = std::clock();
@@ -53,18 +54,18 @@ void PmergeMe::displayResults() const {
 	std::cout << std::endl;
 
 	// Display the sorted sequence (vector version)
-	std::cout << "Sequence sort : ";
+	std::cout << "Sequence sort (vector): ";
 	for (std::vector<int>::const_iterator it = m_sortedSequenceVector.begin(); it != m_sortedSequenceVector.end(); ++it) {
 		std::cout << *it << " ";
 	}
 	std::cout << std::endl;
 
-	// // Display the sorted sequence (list version)
-	// std::cout << "Sequence sort (list): ";
-	// for (std::list<int>::const_iterator it = m_sortedSequenceList.begin(); it != m_sortedSequenceList.end(); ++it) {
-	// 	std::cout << *it << " ";
-	// }
-	// std::cout << std::endl;
+	// Display the sorted sequence (list version)
+	std::cout << "Sequence sort (list): ";
+	for (std::list<int>::const_iterator it = m_sortedSequenceList.begin(); it != m_sortedSequenceList.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
 
 	// Display the sorting times for each container
 	std::cout << std::fixed << std::setprecision(3);
