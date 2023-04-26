@@ -15,8 +15,8 @@ class PmergeMe {
 public:
 	PmergeMe();
 	void setSequence(const std::vector<int>& seq);
-	void mergeInsertionSortVector();
-	void mergeSortList();
+	void mergeISVector();
+	void mergeISList();
 	void displayResults() const;
 private:
 	std::vector<int> m_sequence;

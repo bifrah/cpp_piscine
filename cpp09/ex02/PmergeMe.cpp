@@ -8,7 +8,7 @@ void PmergeMe::setSequence(const std::vector<int>& seq) {
 	m_sequence = seq;
 }
 
-void PmergeMe::mergeInsertionSortVector() {
+void PmergeMe::mergeISVector() {
 	// Copy the sequence into a local vector for sorting
 	std::vector<int> seqCopy = m_sequence;
 
@@ -26,7 +26,7 @@ void PmergeMe::mergeInsertionSortVector() {
 	m_sortedSequenceVector = seqCopy;
 }
 
-void PmergeMe::mergeSortList() {
+void PmergeMe::mergeISList() {
 	// Copy the sequence into a local list for sorting
 	std::list<int> seqCopy(m_sequence.begin(), m_sequence.end());
 

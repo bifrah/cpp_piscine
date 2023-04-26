@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 	pmergeMe.setSequence(sequence);
 
 	// Run the sorting algorithms and display the results
-	pmergeMe.mergeInsertionSortVector();
-	pmergeMe.mergeSortList();
+	pmergeMe.mergeISVector();
+	pmergeMe.mergeISList();
 	pmergeMe.displayResults();
 
 	return 0;
