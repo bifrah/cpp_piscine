@@ -21,7 +21,7 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& v, size_t start, size_t e
 	if (start < end) {
 		if (end - start <= 10) {
 			// Insertion sort for small sequences
-			for (size_t i = start + 1; i <= end; ++i) {
+			for (size_t i = start; i <= end - 1; ++i) {
 				int key = v[i];
 				size_t j = i;
 				while (j > start && v[j - 1] > key) {
