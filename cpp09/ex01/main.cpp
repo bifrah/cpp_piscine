@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 		{
 			if (!token.empty())
 			{
+				std::cout << atof(token.c_str()) << std::endl;
 				if (token == "+")
 					calc.add();
 				else if (token == "-")

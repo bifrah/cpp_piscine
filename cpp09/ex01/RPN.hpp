@@ -58,12 +58,12 @@ public:
 	void sub();
 	void mul();
 	void div();
-	void push(int value);
-	int result() const;
+	void push(float value);
+	float result() const;
 	bool empty() const;
 
 private:
-	std::stack<int> m_stack;
+	std::stack<float> m_stack;
 };
 
 #endif
