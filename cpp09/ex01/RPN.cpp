@@ -30,9 +30,6 @@ void RPN::mul()
 	m_stack.pop();
 	float b = m_stack.top();
 	m_stack.pop();
-	std::cout << "a = " << a << std::endl;
-	std::cout << "b = " << b << std::endl;
-	std::cout << "a * b = " << a * b << std::endl;
 	m_stack.push(a * b);
 }
 

@@ -138,15 +138,11 @@ void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 			// La date n'existe pas dans la map, il faut utiliser la date la plus proche
 			std::map<time_t, float>::iterator lower = bitcoin_data.lower_bound(date);
 			if (lower == bitcoin_data.begin())
-			{
 				// Date inférieure à toutes les dates dans la map
 				std::cout << date_str << " => " << value << " = 0" << std::endl;
-			}
 			else if (lower == bitcoin_data.end())
-			{
 				// Date supérieure à toutes les dates dans la map
 				std::cout << date_str << " => " << value << " = " << bitcoin_data.rbegin()->second * value << std::endl;
-			}
 			else
 			{
 				// Date entre deux dates dans la map
@@ -155,10 +151,8 @@ void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 			}
 		}
 		else
-		{
 			// La date existe dans la map
 			std::cout << date_str << " => " << value << " = " << it->second * value << std::endl;
-		}
 	}
 }
 
