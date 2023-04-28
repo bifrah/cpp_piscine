@@ -42,7 +42,7 @@ bool is_valid_line_format(const std::string& line)
 
 	// Extraction de la date et de la valeur de la ligne
 	std::istringstream iss(line);
-	std::string date_str, value_str;
+	std::string date_str("init"), value_str("init");
 	std::getline(iss, date_str, '|');
 	std::getline(iss, value_str);
 
@@ -54,7 +54,6 @@ bool is_valid_line_format(const std::string& line)
 	}
 
 	// Vérification de la validité de la valeur
-	// std::cout << "value_str : " << value_str << std::endl;
 	if (value_str.empty())
 	{
 		std::cerr << "Error: value: empty" << std::endl;
@@ -89,30 +88,6 @@ bool is_valid_line_format(const std::string& line)
 	return true;
 }
 
-// Fonction qui ajoute les données d'un fichier .csv dans une map
-void add_csv_data_to_map(std::map<time_t, float>& data_map, std::ifstream& csv_file)
-{
-	std::string line;
-	int line_count = 0;
-	while (std::getline(csv_file, line))
-	{
-		// Ignore la première ligne du fichier .csv "date,exchange_rate"
-		if (line_count == 0)
-		{
-			line_count++;
-			continue;
-		}
-		std::string date_str = line.substr(0, line.find(','));
-		std::string value_str = line.substr(line.find(',') + 1);
-		float value;
-		std::istringstream(value_str) >> value;
-		if (value_str.empty() || std::isnan(value))
-			continue;
-		time_t date = date_to_days(date_str);
-		data_map[date] = value;
-	}
-}
-
 void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 {
 	std::string line;
@@ -124,7 +99,7 @@ void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 
 		// Extraction de la date et de la valeur de la ligne
 		std::istringstream iss(line);
-		std::string date_str, value_str;
+		std::string date_str("init"), value_str("init");
 		std::getline(iss, date_str, '|');
 		std::getline(iss, value_str);
 		float value;
@@ -153,6 +128,30 @@ void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 		else
 			// La date existe dans la map
 			std::cout << date_str << " => " << value << " = " << it->second * value << std::endl;
+	}
+}
+
+// Fonction qui ajoute les données d'un fichier .csv dans une map
+void add_csv_data_to_map(std::map<time_t, float>& data_map, std::ifstream& csv_file)
+{
+	std::string line;
+	int line_count = 0;
+	while (std::getline(csv_file, line))
+	{
+		// Ignore la première ligne du fichier .csv "date,exchange_rate"
+		if (line_count == 0)
+		{
+			line_count++;
+			continue;
+		}
+		std::string date_str = line.substr(0, line.find(','));
+		std::string value_str = line.substr(line.find(',') + 1);
+		float value;
+		std::istringstream(value_str) >> value;
+		if (value_str.empty() || std::isnan(value))
+			continue;
+		time_t date = date_to_days(date_str);
+		data_map[date] = value;
 	}
 }
 
