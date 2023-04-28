@@ -156,6 +156,11 @@ void process_file(std::ifstream& infile, std::map<time_t, float>& bitcoin_data)
 	}
 }
 
+bool is_empty(std::ifstream& pFile)
+{
+	return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
 int main(int argc, char** argv)
 {
 	// Vérification des arguments de la ligne de commande
@@ -169,6 +174,11 @@ int main(int argc, char** argv)
 	if (!infile)
 	{
 		std::cerr << "Error: could not open input file." << std::endl;
+		return 1;
+	}
+	if (is_empty(infile))
+	{
+		std::cerr << "Error: file is empty." << std::endl;
 		return 1;
 	}
 	// Ouverture du fichier des données data.csv
