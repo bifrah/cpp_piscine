@@ -2,43 +2,43 @@
 
 int main(int argc, char** argv)
 {
-    RPN calc;
-    for (int i = 1; i < argc; i++)
-	{
-        std::stringstream ss(argv[i]);
-        std::string token;
-        while (getline(ss, token, ' '))
+	try {
+		RPN calc;
+		for (int i = 1; i < argc; i++)
 		{
-            if (!token.empty())
+			std::stringstream ss(argv[i]);
+			std::string token;
+			while (getline(ss, token, ' '))
 			{
-                if (token == "+")
-                    calc.add();
-                else if (token == "-")
-                    calc.sub();
-                else if (token == "*")
-                    calc.mul();
-                else if (token == "/")
-                    calc.div();
-                else
+				if (!token.empty())
 				{
-                    std::stringstream converter(token);
-                    float value;
-                    if (converter >> value)
-                        calc.push(value);
-                    else
+					if (token == "+")
+						calc.add();
+					else if (token == "-")
+						calc.sub();
+					else if (token == "*")
+						calc.mul();
+					else if (token == "/")
+						calc.div();
+					else
 					{
-                        std::cerr << "Invalid token: " << token << std::endl;
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    try {
-        std::cout << calc.result() << std::endl;
-    } catch (const std::exception& ex) {
-        std::cerr << ex.what() << std::endl;
-        return (1);
-    }
-    return 0;
+						std::stringstream converter(token);
+						float value;
+						if (converter >> value)
+							calc.push(value);
+						else
+						{
+							std::cerr << "Invalid token: " << token << std::endl;
+							return 1;
+						}
+					}
+				}
+			}
+		}
+		std::cout << calc.result() << std::endl;
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+		return (1);
+	}
+	return 0;
 }

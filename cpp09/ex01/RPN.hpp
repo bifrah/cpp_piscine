@@ -11,8 +11,7 @@ class OperandsumException : public std::exception {
 public:
     OperandsumException() : std::exception() {}
     virtual const char* what() const throw() {
-        std::cerr << "Error: not enough operands for + operator" << std::endl;
-        exit(128);
+        return ("Error: not enough operands for + operator");
     }
 };
 
@@ -20,8 +19,7 @@ class OperandsubException : public std::exception  {
 public:
 	OperandsubException() : std::exception() {}
 	virtual const char* what() const throw() {
-        std::cerr << "Error: not enough operands for - operator" << std::endl;
-		exit(128);
+		return ("Error: not enough operands for - operator");
 	}
 };
 
@@ -29,8 +27,7 @@ class OperandmulException : public std::exception  {
 public:
 	OperandmulException() : std::exception() {}
 	virtual const char* what() const throw() {
-        std::cerr << "Error: not enough operands for * operator" << std::endl;
-		exit(128);
+		return ("Error: not enough operands for * operator");
 	}
 };
 
@@ -38,8 +35,7 @@ class OperanddivException : public std::exception  {
 public:
 	OperanddivException() : std::exception() {}
 	virtual const char* what() const throw() {
-        std::cerr << "Error: not enough operands for / operator" << std::endl;
-		exit(128);
+		return ("Error: not enough operands for / operator");
 	}
 };
 
@@ -47,8 +43,7 @@ class DivideByZeroException : public std::exception  {
 public:
 	DivideByZeroException() : std::exception() {}
 	virtual const char* what() const throw() {
-        std::cerr << "Error: division by zero" << std::endl;
-		exit(128);
+		return ("Error: division by zero");
 	}
 };
 

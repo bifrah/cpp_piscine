@@ -1,9 +1,8 @@
 #include "RPN.hpp"
 
 RPN::~RPN() {
-	while (!m_stack.empty()) {
+	while (!m_stack.empty())
 		m_stack.pop();
-	}
 }
 
 void RPN::add()
