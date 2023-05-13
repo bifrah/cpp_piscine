@@ -20,6 +20,7 @@ public:
 	void mergeInsertSortList(std::list<int>& l);
 	void mergeISList();
 	void displayResults() const;
+
 private:
 	std::vector<int> m_sequence;
 	std::vector<int> m_sortedSequenceVector;
