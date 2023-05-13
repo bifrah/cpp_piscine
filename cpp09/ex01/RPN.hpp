@@ -9,10 +9,10 @@
 
 class OperandsumException : public std::exception {
 public:
-    OperandsumException() : std::exception() {}
-    virtual const char* what() const throw() {
-        return ("Error: not enough operands for + operator");
-    }
+	OperandsumException() : std::exception() {}
+	virtual const char* what() const throw() {
+		return ("Error: not enough operands for + operator");
+	}
 };
 
 class OperandsubException : public std::exception  {
