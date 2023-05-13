@@ -1,5 +1,11 @@
 #include "RPN.hpp"
 
+RPN::~RPN() {
+	while (!m_stack.empty()) {
+		m_stack.pop();
+	}
+}
+
 void RPN::add()
 {
 	if (m_stack.size() < 2)

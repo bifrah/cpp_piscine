@@ -7,53 +7,55 @@
 #include <sstream>
 #include <stdexcept>
 
-class OperandsumException : public std::runtime_error {
+class OperandsumException : public std::exception {
 public:
-	OperandsumException() : std::runtime_error("Error: not enough operands for + operator") {}
+    OperandsumException() : std::exception() {}
+    virtual const char* what() const throw() {
+        std::cerr << "Error: not enough operands for + operator" << std::endl;
+        exit(128);
+    }
+};
+
+class OperandsubException : public std::exception  {
+public:
+	OperandsubException() : std::exception() {}
 	virtual const char* what() const throw() {
-		std::cerr << std::runtime_error::what() << std::endl;
+        std::cerr << "Error: not enough operands for - operator" << std::endl;
 		exit(128);
 	}
 };
 
-class OperandsubException : public std::runtime_error {
+class OperandmulException : public std::exception  {
 public:
-	OperandsubException() : std::runtime_error("Error: not enough operands for - operator") {}
+	OperandmulException() : std::exception() {}
 	virtual const char* what() const throw() {
-		std::cerr << std::runtime_error::what() << std::endl;
+        std::cerr << "Error: not enough operands for * operator" << std::endl;
 		exit(128);
 	}
 };
 
-class OperandmulException : public std::runtime_error {
+class OperanddivException : public std::exception  {
 public:
-	OperandmulException() : std::runtime_error("Error: not enough operands for * operator") {}
+	OperanddivException() : std::exception() {}
 	virtual const char* what() const throw() {
-		std::cerr << std::runtime_error::what() << std::endl;
+        std::cerr << "Error: not enough operands for / operator" << std::endl;
 		exit(128);
 	}
 };
 
-class OperanddivException : public std::runtime_error {
+class DivideByZeroException : public std::exception  {
 public:
-	OperanddivException() : std::runtime_error("Error: not enough operands for / operator") {}
+	DivideByZeroException() : std::exception() {}
 	virtual const char* what() const throw() {
-		std::cerr << std::runtime_error::what() << std::endl;
-		exit(128);
-	}
-};
-
-class DivideByZeroException : public std::runtime_error {
-public:
-	DivideByZeroException() : std::runtime_error("Error: division by zero") {}
-	virtual const char* what() const throw() {
-		std::cerr << std::runtime_error::what() << std::endl;
+        std::cerr << "Error: division by zero" << std::endl;
 		exit(128);
 	}
 };
 
 class RPN {
 public:
+	~RPN();
+
 	void add();
 	void sub();
 	void mul();
