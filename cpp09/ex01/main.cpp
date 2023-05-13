@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 		std::cout << calc.result() << std::endl;
 	} catch (const std::exception& ex) {
 		std::cerr << ex.what() << std::endl;
-		exit(1);
+		return (1);
 	}
 	return 0;
 }
